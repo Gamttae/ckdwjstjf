@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>기초인공지능프로그래밍(COR1010) 기말 완벽정리</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root{
+    --bg:#0f1117; --panel:#171a23; --panel2:#1d212c;
+    --ink:#e9ecf3; --muted:#9aa3b2; --line:#2b3140;
+    --accent:#6ea8fe; --accent2:#4f7cff;
+    --green:#36d399; --green-bg:#10241c;
+    --red:#ff6b6b; --red-bg:#2a1518;
+    --amber:#ffd166; --amber-bg:#2a2410;
+    --purple:#c08cff; --purple-bg:#1f1830;
+    --code:#0b0d13; --codeink:#d7e0ef;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    line-height:1.7; font-size:16px;
+  }
+  .wrap{max-width:980px; margin:0 auto; padding:0 20px 120px}
+  header.hero{
+    background:linear-gradient(135deg,#1b2438,#141826 60%,#10131c);
+    border-bottom:1px solid var(--line); padding:34px 20px 26px; margin-bottom:8px;
+  }
+  .hero-in{max-width:980px;margin:0 auto}
+  .hero h1{margin:0 0 6px; font-size:27px; letter-spacing:-.5px}
+  .hero .sub{color:var(--muted); font-size:15px}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .badge{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:5px 13px;font-size:13px;color:var(--ink)}
+  .badge b{color:var(--accent)}
+  .dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:18px}
+  .dash .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .dash .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+  .dash .v{font-size:17px;font-weight:700;margin-top:3px}
+  .dash .v small{font-weight:400;color:var(--muted);font-size:12px}
+
+  nav.toc{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:22px 0}
+  nav.toc h2{margin:0 0 10px;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  nav.toc ol{margin:0;padding-left:20px;columns:2;column-gap:30px}
+  nav.toc a{color:var(--accent);text-decoration:none}
+  nav.toc a:hover{text-decoration:underline}
+  @media(max-width:640px){nav.toc ol{columns:1}}
+
+  section{margin:38px 0}
+  h2.part{font-size:22px;border-left:5px solid var(--accent2);padding:4px 0 4px 14px;margin:0 0 4px;scroll-margin-top:16px}
+  .part-tag{display:inline-block;font-size:12px;color:var(--accent);background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:2px 8px;margin-left:8px;vertical-align:middle}
+  h3{font-size:18px;margin:26px 0 8px;border-bottom:1px solid var(--line);padding-bottom:6px}
+  h4{font-size:15.5px;margin:18px 0 6px;color:#cdd6e6}
+  p{margin:8px 0}
+  ul,ol{margin:8px 0 8px;padding-left:22px}
+  li{margin:4px 0}
+  code{background:#222838;color:#ffd9a0;padding:1px 6px;border-radius:5px;font-family:"JetBrains Mono","SF Mono",Consolas,monospace;font-size:13.5px}
+  strong{color:#fff}
+  .muted{color:var(--muted)}
+  hr{border:0;border-top:1px solid var(--line);margin:30px 0}
+
+  pre{background:var(--code);border:1px solid #1c2231;border-radius:10px;padding:14px 16px;overflow-x:auto;margin:10px 0}
+  pre code{background:none;color:var(--codeink);padding:0;font-size:13.5px;line-height:1.6;white-space:pre}
+  .cmt{color:#6f7c92}
+  .kw{color:#ff9ec3}
+  .fn{color:#82d8ff}
+  .str{color:#a5e8a0}
+  .num{color:#ffd479}
+  .self{color:#c08cff;font-style:italic}
+
+  .box{border-radius:12px;padding:14px 16px;margin:14px 0;border:1px solid var(--line)}
+  .box .lab{font-weight:700;font-size:13px;letter-spacing:.4px;display:flex;align-items:center;gap:7px;margin-bottom:6px}
+  .prof{background:var(--red-bg);border-color:#5a2630}
+  .prof .lab{color:var(--red)}
+  .predict{background:#10203a;border-color:#274266}
+  .predict .lab{color:var(--accent)}
+  .key{background:var(--amber-bg);border-color:#5a4f1e}
+  .key .lab{color:var(--amber)}
+  .trap{background:#2a1518;border-color:#5a2630}
+  .trap .lab{color:#ff8f8f}
+  .note{background:var(--purple-bg);border-color:#3a2d59}
+  .note .lab{color:var(--purple)}
+
+  /* Q&A */
+  .qa{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:10px 0;overflow:hidden}
+  .qa .q{padding:11px 15px;font-weight:600;display:flex;gap:9px}
+  .qa .q::before{content:"Q";background:var(--accent2);color:#fff;border-radius:6px;min-width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:1px}
+  .qa .a{padding:0 15px 12px 46px;color:#d7deea;font-size:14.5px}
+  .qa .a::before{content:"A";color:var(--green);font-weight:700;margin-right:8px;margin-left:-26px}
+
+  details.todo{background:#11151e;border:1px solid #283042;border-radius:10px;margin:14px 0;padding:0}
+  details.todo>summary{cursor:pointer;padding:12px 15px;font-weight:600;color:#cfe0ff;list-style:none;display:flex;align-items:center;gap:8px}
+  details.todo>summary::-webkit-details-marker{display:none}
+  details.todo>summary::before{content:"▶";color:var(--accent);font-size:11px;transition:transform .15s}
+  details.todo[open]>summary::before{transform:rotate(90deg)}
+  details.todo .body{padding:0 15px 14px}
+  .sol{border-top:1px dashed #2c3445;margin-top:6px;padding-top:10px}
+  .sol .lab{color:var(--green);font-weight:700;font-size:13px;margin-bottom:4px}
+
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:#cdd6e6;font-size:13px}
+  td code{font-size:12.5px}
+  tr:nth-child(even) td{background:#13161f}
+
+  .pill{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:5px;font-weight:600}
+  .p-hi{background:#3a1a1f;color:#ff8f8f;border:1px solid #5a2630}
+  .p-mid{background:#3a2f10;color:var(--amber);border:1px solid #5a4f1e}
+  .p-lo{background:#16263a;color:var(--accent);border:1px solid #274266}
+
+  footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;text-align:center}
+
+  @media print{
+    body{background:#fff;color:#111;font-size:11.5pt}
+    .wrap{padding:0}
+    header.hero{background:#f4f6fb;color:#111;border-color:#ccc}
+    .hero h1,.dash .v,strong{color:#111}
+    nav.toc{break-inside:avoid}
+    section{break-inside:auto}
+    h2.part{break-after:avoid;border-color:#333}
+    pre{background:#f6f7fb;border-color:#ddd}
+    pre code,.cmt,.kw,.fn,.str,.num,.self,pre code span{color:#111 !important;font-style:normal}
+    code{background:#eee;color:#900}
+    .box,.qa,details.todo{break-inside:avoid;border-color:#bbb !important}
+    details.todo .body{display:block !important}
+    details.todo>summary::before{content:"●"}
+    .prof{background:#fff4f4}.predict{background:#eef4ff}.key{background:#fff9e8}.trap{background:#fff4f4}.note{background:#f7f2ff}
+    a{color:#06c;text-decoration:none}
+    .badge,.dash .card{border-color:#ccc}
+    th{background:#eef!important}
+    tr:nth-child(even) td{background:#f7f8fc}
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-in">
+    <h1>🐍 기초인공지능프로그래밍 (COR1010) — 기말 완벽정리</h1>
+    <div class="sub">중간 이후 전 범위 · Lecture 06–09 · 강의자료 + 녹취록 종합 분석 · <b>“읽기만 하면 만점”</b> 목표</div>
+    <div class="badges">
+      <span class="badge">🗓 기말 <b>6/22(월)</b></span>
+      <span class="badge">📦 범위 <b>Lec 06–09</b></span>
+      <span class="badge">📝 형식 <b>종이(개념)+엘리스(코딩)</b></span>
+      <span class="badge">📖 <b>Open book/notes</b> (인터넷·컴퓨터 ✕)</span>
+      <span class="badge">⚙ 출제 <b>4 셋: 개념2 + TODO2</b></span>
+    </div>
+    <div class="dash">
+      <div class="card"><div class="k">중간 통계</div><div class="v">평균·중앙값 44–47 <small>/ 만점 90</small></div></div>
+      <div class="card"><div class="k">핵심 1순위</div><div class="v">OOP · 상속 <small>(Lec 08–09)</small></div></div>
+      <div class="card"><div class="k">교수님 강조</div><div class="v">“이해 못하면 <small>기말 못 본다”</small></div></div>
+      <div class="card"><div class="k">실전 연계</div><div class="v">과제 3–6 <small>= 기말 연습</small></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<nav class="toc">
+  <h2>목차</h2>
+  <ol>
+    <li><a href="#strategy">시험 형식 분석 &amp; 출제 예측 (근거 기반)</a></li>
+    <li><a href="#lec6">Lecture 06 — 재귀 &amp; 딕셔너리</a></li>
+    <li><a href="#lec7">Lecture 07 — 테스팅·디버깅·예외·Assert</a></li>
+    <li><a href="#lec8">Lecture 08 — 객체지향(OOP)</a></li>
+    <li><a href="#lec9">Lecture 09 — 클래스와 상속</a></li>
+    <li><a href="#cheat">핵심 치트시트 (지참용)</a></li>
+    <li><a href="#mock">종합 모의고사 (4 셋 형식)</a></li>
+  </ol>
+</nav>
+
+<section id="strategy">
+  <h2 class="part">1. 시험 형식 분석 &amp; 출제 예측 <span class="part-tag">근거 기반</span></h2>
+
+  <h3>① 시험 형식 — 중간고사 구조에서 역추적</h3>
+  <p>중간고사는 <strong>크게 4 셋</strong>으로 출제되었고, 기말도 같은 설계를 따를 가능성이 매우 높다. 강의자료(Lec6) 첫 슬라이드 <em>QUIZ PREP</em>에 명시된 형식과도 일치한다.</p>
+  <table>
+    <tr><th style="width:70px">셋</th><th>유형</th><th>내용 (중간 → 기말 예측)</th><th>대비 파트</th></tr>
+    <tr><td><b>셋 1–2</b></td><td>개념 Q&amp;A<br><span class="muted">(종이)</span></td><td>“무슨 <b>데이터 타입</b>·<b>함수</b>를 배웠는지” 기초 개념을 묻고 답. → 기말: 딕셔너리/예외/클래스/상속의 <b>용어·규칙·메서드</b></td><td>각 Lecture의 <span class="muted">‘개념 Q&amp;A’</span> + 치트시트</td></tr>
+    <tr><td><b>셋 3–4</b></td><td>fill-in-TODO<br><span class="muted">(엘리스 코딩)</span></td><td>전체 프로그램 중 일부 함수의 <code># TODO</code>를 채우는 형식. → 기말: 재귀 함수, 빈도 딕셔너리, try/except, 클래스 메서드/상속 채우기</td><td>각 Lecture의 <span class="muted">‘fill-in-TODO’</span> + 모의고사</td></tr>
+  </table>
+  <div class="box predict"><div class="lab">📌 형식 확정 근거</div>
+    <b>Lec6 QUIZ PREP 슬라이드 원문</b>: “a paper and an <b>online</b> component · <b>open book/notes</b> · <b>not</b> open Internet, <b>not</b> open computer · start <b>printing out</b> whatever you may want to bring.”
+    → 종이(개념)+온라인(엘리스 코딩) 2원 구성, <b>노트·출력물 지참 허용</b>이므로 이 자료를 <b>인쇄해서 지참</b>하면 그대로 무기가 된다. (인터넷·컴퓨터로 검색은 불가 → 암기가 아니라 <b>찾아 쓸 수 있게 정리</b>가 핵심)
+  </div>
+
+  <h3>② 기말 범위 — 강의 스케줄 확정</h3>
+  <p>중간(4/27)은 Lec 01–05까지. <strong>기말은 중간 이후 = Lecture 06–09</strong>가 범위다. 프로그래밍 과목 특성상 앞부분 기초(자료형·반복문·함수·리스트)는 <em>당연히 전제</em>되어 코드 안에 섞여 나온다.</p>
+  <table>
+    <tr><th>주차</th><th>강의</th><th>핵심 주제</th><th>연계 과제</th></tr>
+    <tr><td>9–10</td><td><b>Lecture 06</b></td><td>재귀(Recursion) · 딕셔너리(Dictionaries) · 메모이제이션</td><td>Assignment 3</td></tr>
+    <tr><td>11–12</td><td><b>Lecture 07</b></td><td>테스팅 · 디버깅 · 예외(try/except) · assertion</td><td>Assignment 4</td></tr>
+    <tr><td>13</td><td><b>Lecture 08</b></td><td>객체지향(OOP) · 클래스 · `__init__` · 메서드 · 연산자 오버로딩</td><td>Assignment 5</td></tr>
+    <tr><td>14–15</td><td><b>Lecture 09</b></td><td>getter/setter · 상속 · 오버라이드 · 클래스 변수</td><td>Assignment 6</td></tr>
+  </table>
+  <div class="box key"><div class="lab">🎯 과제 = 기말 연습문제 그 자체</div>
+    교수님·조교가 매주 엘리스 과제(3–6)를 “이게 기말 연습”이라 반복 강조. fill-in-TODO 셋의 원형은 <b>엘리스 과제 코드</b>다. 과제 3–6의 함수들을 다시 손으로 채워보는 것이 가장 확실한 대비.
+  </div>
+
+  <h3>③ 교수님이 직접 강조한 부분 (녹취록 원문 근거)</h3>
+  <div class="box prof"><div class="lab">🗣 13주차 (OOP) — 최상위 강조</div>
+    “이거 <b>이해 안 되면 안 됩니다</b>. 여러분 이해 안 되면 <b>기말고사에 아무것도 [할] 수 없을 수 있어요</b>.” — Coordinate 클래스의 <code>self</code>·<code>__init__</code>·메서드 호출을 설명하며. <br>
+    → <b>class/instance 구분, self의 의미, __init__ 자동 호출, 메서드 호출 2방식</b>은 반드시 출제된다고 보고 완전 정복할 것.
+  </div>
+  <div class="box prof"><div class="lab">🗣 15주차 (상속) — “별표 별표”</div>
+    “<b>별표 별표를 많이 해 주세요.</b>” — 상속에서 자식이 부모의 데이터·메서드를 모두 물려받고, <b>오버라이드</b>할 수 있으며, 메서드는 계층을 타고 올라가 <b>처음 찾은 것</b>을 쓴다는 대목. <br>
+    “특히 중요한 거 우리가 <b>오버라이드</b> 할 수 있다… 이걸 가져가면 됩니다.” → <b>오버라이드 + 메서드 탐색 순서</b> 집중.
+  </div>
+  <div class="box prof"><div class="lab">🗣 15주차 — 클래스 변수 (주민등록번호 비유)</div>
+    “<code>self</code>가 없다는 거는 이제 얘가 <b>클래스 변수</b>다… 모든 인스턴스에서 <b>공유</b>되는 값.” Rabbit의 <code>tag</code>를 주민등록번호/붕어빵 번호에 비유하며 길게 설명 → <b>클래스 변수 vs 인스턴스 변수</b> 빈출 예고.
+  </div>
+  <div class="box prof"><div class="lab">🗣 12주차 (예외) — “한국말로 중요하니까”</div>
+    “이 부분은 이제 <b>한국말로 중요하니까</b> 한 번 더 해보면…” — try 안의 코드를 한 줄씩 실행하다 에러가 나면 except로 넘어가 <b>프로그램을 멈추지 않고 이어간다</b>는 try/except 동작 원리. → 예외 처리 흐름 추적 문제 대비.
+  </div>
+
+  <h3>④ 출제 확률 매트릭스 (추론 종합)</h3>
+  <table>
+    <tr><th>주제</th><th>확률</th><th>근거 / 예상 출제 형태</th></tr>
+    <tr><td><b>클래스 정의·__init__·self·메서드</b></td><td><span class="pill p-hi">매우 높음</span></td><td>교수님 “못 풀면 기말 아무것도 못 함”. TODO로 메서드 본문/`__str__` 채우기 + 개념으로 self 의미 질문</td></tr>
+    <tr><td><b>상속·오버라이드·부모 생성자 호출</b></td><td><span class="pill p-hi">매우 높음</span></td><td>“별표 별표”. 자식 클래스 채우기, 메서드 탐색 순서 추적, <code>Animal.__init__(self,…)</code></td></tr>
+    <tr><td><b>딕셔너리 빈도 세기 + 메모이제이션</b></td><td><span class="pill p-hi">매우 높음</span></td><td>Lec6 핵심 예제 3종 + fib_efficient. TODO 단골</td></tr>
+    <tr><td><b>재귀 (factorial/fib/하노이/회문)</b></td><td><span class="pill p-hi">매우 높음</span></td><td>base case+recursive step 채우기, 호출 추적·출력 결과 쓰기</td></tr>
+    <tr><td><b>try/except/else/finally · raise · assert</b></td><td><span class="pill p-mid">높음</span></td><td>“한국말로 중요”. 에러 종류 매칭, 출력 결과 예측, except 채우기</td></tr>
+    <tr><td><b>클래스 변수 vs 인스턴스 변수</b></td><td><span class="pill p-mid">높음</span></td><td>Rabbit.tag 길게 설명. 공유 여부·값 추적 질문</td></tr>
+    <tr><td><b>연산자 오버로딩(__add__,__eq__,__lt__)</b></td><td><span class="pill p-mid">높음</span></td><td>Fraction/Rabbit 예제. 특수 메서드 ↔ 연산자 매칭</td></tr>
+    <tr><td><b>에러 종류 식별(IndexError 등)</b></td><td><span class="pill p-mid">높음</span></td><td>개념 셋 단골. 코드 → 어떤 에러? 매칭</td></tr>
+    <tr><td><b>테스트 분류·black/glass box</b></td><td><span class="pill p-lo">보통</span></td><td>개념 용어 매칭 위주</td></tr>
+    <tr><td><b>getter/setter·정보 은닉·default 인자</b></td><td><span class="pill p-lo">보통</span></td><td>“왜 a.age보다 a.get_age()?” 개념 질문</td></tr>
+  </table>
+  <div class="box trap"><div class="lab">⚠ 중간 통계로 본 난이도 경고</div>
+    중간 평균·중앙값 <b>44–47점(만점 90)</b> — 절반 수준의 어려운 시험이었다(녹취록 10주차 조교 발언). 개념을 “안다” 수준이 아니라 <b>코드를 직접 채우고, 실행 결과를 손으로 추적</b>할 수 있어야 점수가 나온다. 이 자료의 TODO를 <b>먼저 풀고</b> 정답을 여는 방식으로 공부할 것.
+  </div>
+</section>
+
+<section id="lec6">
+  <h2 class="part">2. Lecture 06 — 재귀 &amp; 딕셔너리 <span class="part-tag">Recursion · Dictionaries</span></h2>
+
+  <h3>2-1. 재귀 (Recursion)</h3>
+  <p><strong>재귀 = 함수가 자기 자신을 호출</strong>하는 기법. 큰 문제를 <em>같은 형태의 더 작은 문제</em>로 줄여 푼다(divide/decrease-and-conquer). 반드시 두 부분이 있어야 한다:</p>
+  <ul>
+    <li><strong>base case(기저 사례)</strong> — 더 줄이지 않고 즉시 답하는 종료 조건. <span class="muted">없으면 무한 재귀 → <code>RecursionError</code></span></li>
+    <li><strong>recursive step(재귀 단계)</strong> — 문제를 더 작은 같은 문제로 축소하여 자기 자신 호출</li>
+  </ul>
+
+  <h4>곱셈: 반복 vs 재귀 (같은 일을 두 방식으로)</h4>
+  <pre><code class="language-python"># 반복(iterative): a를 b번 더한다
+def mult_iter(a, b):
+    result = 0
+    while b &gt; 0:
+        result += a
+        b -= 1
+    return result
+
+# 재귀(recursive): a*b = a + a*(b-1)
+def mult(a, b):
+    if b == 1:          # base case
+        return a
+    else:               # recursive step
+        return a + mult(a, b-1)</code></pre>
+
+  <h4>팩토리얼 &amp; 피보나치(base case 2개)</h4>
+  <pre><code class="language-python">def fact(n):            # n! = n*(n-1)*...*1
+    if n == 1:
+        return 1
+    else:
+        return n * fact(n-1)
+
+def fib(n):             # base case가 2개!
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return fib(n-1) + fib(n-2)</code></pre>
+  <div class="box note"><div class="lab">🧠 호출 스코프(scope)</div>
+    재귀 호출은 <b>매번 자기만의 스코프(스택 프레임)</b>를 만든다. 그래서 각 호출의 <code>n</code>은 서로 안 섞이고, 호출이 값을 반환하면 <b>제어가 이전 스코프로 돌아간다</b>. → 시험의 “호출 추적해 출력 쓰기” 유형의 핵심.
+  </div>
+
+  <h4>하노이 탑 (재귀적 사고의 대표)</h4>
+  <pre><code class="language-python">def printMove(fr, to):
+    print('move from ' + str(fr) + ' to ' + str(to))
+
+def Towers(n, fr, to, spare):
+    if n == 1:
+        printMove(fr, to)
+    else:
+        Towers(n-1, fr, spare, to)   # 위 n-1개를 spare로
+        Towers(1, fr, to, spare)     # 제일 큰 1개를 목적지로
+        Towers(n-1, spare, to, fr)   # n-1개를 다시 목적지로</code></pre>
+
+  <h4>비(非)숫자 재귀: 회문(palindrome) — 보조함수 중첩</h4>
+  <pre><code class="language-python">def isPalindrome(s):
+    def toChars(s):                  # 소문자화 + 알파벳만 남김
+        s = s.lower()
+        ans = ''
+        for c in s:
+            if c in 'abcdefghijklmnopqrstuvwxyz':
+                ans = ans + c
+        return ans
+    def isPal(s):
+        if len(s) &lt;= 1:              # 길이 0·1이면 회문(base)
+            return True
+        else:                        # 양끝 같고 가운데도 회문이면 회문
+            return s[0] == s[-1] and isPal(s[1:-1])
+    return isPal(toChars(s))</code></pre>
+
+  <div class="box key"><div class="lab">🔑 반복 vs 재귀 비교</div>
+    재귀는 <b>더 간결·직관적</b>(프로그래머 관점)이지만, <b>컴퓨터 관점에선 비효율적</b>일 수 있다(함수 호출 비용·중복 계산). 정확성은 <b>수학적 귀납법</b>과 같은 논리로 보장된다: base 성립 + (k 성립 ⇒ k+1 성립).
+  </div>
+
+  <h4>📋 개념 Q&amp;A — 재귀</h4>
+  <div class="qa"><div class="q">재귀 함수가 반드시 가져야 하는 두 요소는?</div><div class="a">base case(종료 조건)와 recursive step(더 작은 같은 문제로 축소하는 호출). base case가 없으면 무한 재귀로 <code>RecursionError</code>.</div></div>
+  <div class="qa"><div class="q">각 재귀 호출은 변수를 공유하는가?</div><div class="a">아니다. 호출마다 <b>독립된 스코프</b>가 생겨 변수가 섞이지 않는다. 호출이 끝나 값을 반환하면 제어가 직전 스코프로 돌아간다.</div></div>
+  <div class="qa"><div class="q">피보나치 재귀가 비효율적인 이유는?</div><div class="a">같은 값을 <b>여러 번 중복 계산</b>하기 때문(예: fib(34)는 11,405,773번 호출). → 딕셔너리로 memoization하면 65번으로 줄어듦.</div></div>
+
+  <h4>✏️ fill-in-TODO — 재귀</h4>
+  <details class="todo"><summary>문제 1. 리스트 원소 합을 재귀로 구하라</summary>
+  <div class="body">
+  <pre><code class="language-python">def rec_sum(lst):
+    if len(lst) == 0:
+        return ____          # TODO (A) base case
+    else:
+        return ____          # TODO (B) recursive step</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">    return 0                 # (A) 빈 리스트의 합 = 0
+    return lst[0] + rec_sum(lst[1:])   # (B) 첫 원소 + 나머지의 합</code></pre>
+  <span class="muted">핵심: 리스트 슬라이싱 <code>lst[1:]</code>로 “더 작은 같은 문제”를 만든다.</span>
+  </div></div></details>
+
+  <details class="todo"><summary>문제 2. 거듭제곱 power(b, e) = b^e 를 재귀로</summary>
+  <div class="body">
+  <pre><code class="language-python">def power(b, e):
+    if e == 0:
+        return ____          # TODO (A)  b^0
+    else:
+        return ____          # TODO (B)</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">    return 1                 # (A) 어떤 수의 0승 = 1
+    return b * power(b, e-1)  # (B) b^e = b * b^(e-1)</code></pre>
+  </div></div></details>
+
+  <details class="todo"><summary>문제 3. 호출 추적 — 출력 결과를 쓰라</summary>
+  <div class="body">
+  <pre><code class="language-python">def mystery(n):
+    if n == 0:
+        return
+    print(n)
+    mystery(n-1)
+    print(n)
+
+mystery(3)</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <p>출력: <code>3 2 1 1 2 3</code> (각 줄에 하나씩)</p>
+  <span class="muted">내려갈 때 <code>print(n)</code>로 3,2,1 → base에서 멈춤 → 되돌아오며 <code>print(n)</code>로 1,2,3. 재귀가 “접혔다 펴지는” 전형적 추적 문제.</span>
+  </div></div></details>
+
+  <hr>
+
+  <h3>2-2. 딕셔너리 (Dictionaries)</h3>
+  <p><strong>딕셔너리 = key–value 쌍의 모음</strong> <code>{key: value}</code>. 리스트가 “정수 인덱스로 순서대로” 찾는다면, 딕셔너리는 <strong>임의의 key로 바로</strong> 찾는다(순서 개념 없음).</p>
+  <pre><code class="language-python">grades = {'Ana':'B', 'John':'A+', 'Denise':'A', 'Katy':'A'}
+
+grades['John']          # 조회 → 'A+'   (없는 key → KeyError)
+grades['Sylvan'] = 'A'  # 추가/수정
+'John' in grades        # key 존재 검사 → True
+del(grades['Ana'])      # 삭제
+grades.keys()           # 모든 key (tuple처럼 순회 가능)
+grades.values()         # 모든 value</code></pre>
+  <div class="box trap"><div class="lab">⚠ key / value 규칙 (빈출!)</div>
+    <ul style="margin:4px 0">
+      <li><b>key는 유일(unique)</b>하고 <b>불변(immutable=hashable) 타입</b>만: <code>int, float, str, tuple, bool</code> 가능 / <b><code>list</code>는 key 불가</b></li>
+      <li><b>value는 아무 타입</b>이나 OK(중복 허용). 리스트·딕셔너리도 value 가능</li>
+      <li>key·value에 <b>순서 보장 없음</b></li>
+    </ul>
+  </div>
+  <table>
+    <tr><th>리스트 list</th><th>딕셔너리 dict</th></tr>
+    <tr><td>순서 있는 원소 시퀀스</td><td>key→value 매핑</td></tr>
+    <tr><td>정수 인덱스로 조회</td><td>임의 key로 조회</td></tr>
+    <tr><td>인덱스에 순서 있음</td><td>순서 보장 없음</td></tr>
+    <tr><td>인덱스 = 정수</td><td>key = 불변 타입 무엇이든</td></tr>
+  </table>
+
+  <h4>대표 예제: 노래 가사 분석 3함수 (Lec6 핵심)</h4>
+  <pre><code class="language-python"># ① 빈도 딕셔너리 만들기 (str → int)
+def lyrics_to_frequencies(lyrics):
+    myDict = {}
+    for word in lyrics:
+        if word in myDict:
+            myDict[word] += 1
+        else:
+            myDict[word] = 1
+    return myDict
+
+# ② 가장 많이 나온 단어(들)과 횟수 → (list, int)
+def most_common_words(freqs):
+    values = freqs.values()
+    best = max(values)
+    words = []
+    for k in freqs:
+        if freqs[k] == best:
+            words.append(k)
+    return (words, best)
+
+# ③ 최소 minTimes번 이상 나온 단어들 (딕셔너리를 변형하며 반복)
+def words_often(freqs, minTimes):
+    result = []
+    done = False
+    while not done:
+        temp = most_common_words(freqs)
+        if temp[1] &gt;= minTimes:
+            result.append(temp)
+            for w in temp[0]:
+                del(freqs[w])     # 찾은 단어 삭제 후 반복
+        else:
+            done = True
+    return result</code></pre>
+  <div class="box key"><div class="lab">🔑 빈도 세기 관용구</div>
+    <code>if w in d: d[w]+=1 else: d[w]=1</code> 패턴 = 한 줄로 <code>d[w] = d.get(w, 0) + 1</code>. TODO 단골이니 둘 다 익힐 것.
+  </div>
+
+  <h4>메모이제이션: 딕셔너리로 재귀 효율화 ★</h4>
+  <pre><code class="language-python">def fib_efficient(n, d):
+    if n in d:                 # 이미 계산했으면 바로 반환
+        return d[n]
+    else:
+        ans = fib_efficient(n-1, d) + fib_efficient(n-2, d)
+        d[n] = ans             # 계산 결과를 저장
+        return ans
+
+d = {1:1, 2:2}
+print(fib_efficient(6, d))</code></pre>
+  <p><span class="muted">fib(34): 11,405,773번 → fib_efficient(34): <b>65번</b>. 단, <b>부작용 없는(side-effect-free) 함수</b>에만 안전하게 적용 가능.</span></p>
+
+  <h4>📋 개념 Q&amp;A — 딕셔너리</h4>
+  <div class="qa"><div class="q">딕셔너리 key가 될 수 있는 타입과 될 수 없는 타입은?</div><div class="a">될 수 있다: 불변/해시가능 타입 — <code>int, float, str, tuple, bool</code>. 될 수 없다: <b><code>list</code></b>(가변). value는 제한 없음.</div></div>
+  <div class="qa"><div class="q">없는 key로 조회 <code>grades['Sylvan']</code> 하면?</div><div class="a"><code>KeyError</code> 발생. (존재 검사는 <code>'Sylvan' in grades</code>로)</div></div>
+  <div class="qa"><div class="q">리스트와 딕셔너리의 가장 큰 차이?</div><div class="a">리스트는 <b>정수 인덱스·순서</b>로 접근, 딕셔너리는 <b>임의 key로 매핑</b>(순서 없음). “한 항목을 다른 항목으로” 찾을 때 딕셔너리.</div></div>
+  <div class="qa"><div class="q">memoization이 효율적인 이유와 전제 조건?</div><div class="a">이미 계산한 값을 딕셔너리에 저장해 <b>중복 계산 제거</b>. 단 <b>부작용 없는 함수</b>(같은 입력 → 항상 같은 출력)에서만 안전.</div></div>
+
+  <h4>✏️ fill-in-TODO — 딕셔너리</h4>
+  <details class="todo"><summary>문제 4. 리스트에서 빈도 딕셔너리 만들기</summary>
+  <div class="body">
+  <pre><code class="language-python">def count_items(items):
+    d = {}
+    for x in items:
+        if ____:            # TODO (A) 이미 있으면
+            d[x] += 1
+        else:
+            ____            # TODO (B) 처음 보면
+    return d</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">        if x in d:          # (A) key 존재 검사
+            d[x] += 1
+        else:
+            d[x] = 1        # (B) 첫 등장은 1로 초기화</code></pre>
+  <span class="muted">한 줄 버전: <code>d[x] = d.get(x, 0) + 1</code></span>
+  </div></div></details>
+
+  <details class="todo"><summary>문제 5. 딕셔너리에서 최댓값 value를 갖는 key 찾기</summary>
+  <div class="body">
+  <pre><code class="language-python">def key_of_max(d):
+    best_key = None
+    best_val = None
+    for k in d:
+        if best_val is None or d[k] &gt; best_val:
+            best_key = ____    # TODO (A)
+            best_val = ____    # TODO (B)
+    return best_key</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">            best_key = k       # (A) 현재 key 기억
+            best_val = d[k]    # (B) 현재 value 기억</code></pre>
+  </div></div></details>
+
+  <details class="todo"><summary>문제 6. memoized 계승(factorial) 완성</summary>
+  <div class="body">
+  <pre><code class="language-python">def fact_memo(n, memo):
+    if n in memo:
+        return ____               # TODO (A)
+    if n == 1:
+        return 1
+    memo[n] = ____                # TODO (B)
+    return memo[n]
+
+print(fact_memo(5, {}))</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">        return memo[n]            # (A) 저장된 값 재사용
+    memo[n] = n * fact_memo(n-1, memo)   # (B) 계산 후 저장</code></pre>
+  <span class="muted">출력: 120</span>
+  </div></div></details>
+</section>
+
+<section id="lec7">
+  <h2 class="part">3. Lecture 07 — 테스팅·디버깅·예외·Assertion <span class="part-tag">Testing · Debugging · Exceptions · Assertions</span></h2>
+
+  <h3>3-1. 방어적 프로그래밍 &amp; 테스팅</h3>
+  <p>“수프에 벌레가 떨어진다”는 비유: <strong>검사(testing)</strong> · <strong>뚜껑 닫기(defensive programming)</strong> · <strong>부엌 청소(버그 원인 제거)</strong>.</p>
+  <ul>
+    <li><strong>Testing/Validation</strong>: 입력–출력을 스펙과 비교. <em>“어떻게 내 프로그램을 깨뜨릴까?”</em></li>
+    <li><strong>Debugging</strong>: 에러까지의 사건을 추적. <em>“왜 안 되지? 어떻게 고치지?”</em></li>
+    <li><strong>방어적 프로그래밍</strong>: 함수 명세(specification) 작성, 모듈화, 입출력 조건 검사(assertion)</li>
+  </ul>
+  <h4>테스트 분류</h4>
+  <table>
+    <tr><th>종류</th><th>의미</th></tr>
+    <tr><td><b>Unit testing</b></td><td>각 <b>함수/조각을 따로</b> 검증</td></tr>
+    <tr><td><b>Regression testing</b></td><td>발견한 버그마다 테스트 추가 → <b>고친 버그 재발</b> 잡기</td></tr>
+    <tr><td><b>Integration testing</b></td><td><b>전체 프로그램</b>이 동작하는지(성급히 여기로 직행하기 쉬움)</td></tr>
+  </table>
+  <h4>Black box vs Glass box</h4>
+  <table>
+    <tr><th>Black box (블랙박스)</th><th>Glass box (글래스박스)</th></tr>
+    <tr><td><b>명세(스펙)만</b> 보고 설계</td><td><b>코드</b>를 보고 설계</td></tr>
+    <tr><td>구현 바뀌어도 재사용 가능, 구현자 편향 회피</td><td>모든 경로 1회 이상 → <b>path-complete</b></td></tr>
+    <tr><td><b>경계값</b>(빈 리스트, 단일 원소, 큰 수·작은 수) 반드시 포함</td><td>분기·for·while 경로를 따라 케이스 구성</td></tr>
+  </table>
+
+  <h3>3-2. 디버깅</h3>
+  <ul>
+    <li><strong>print 문</strong>을 <strong>이분 탐색(bisection)</strong>으로 배치: 코드 중간에 print → 버그가 앞/뒤 어디인지 좁히기. 함수 진입·인자·결과를 찍어 가설 검증</li>
+    <li>“왜 <em>되지?</em>”가 아니라 “<b>어쩌다 이 결과가 나왔지?</b>”를 과학적 방법(데이터→가설→재현 실험→가장 단순한 입력)으로</li>
+    <li>DON’T: 전체 작성→전체 테스트→전체 디버그 / DO: <b>함수 단위로 작성·테스트·디버그</b> 후 통합. 코드 바꾸기 전 <b>백업</b>, 바뀐 점 주석 기록</li>
+  </ul>
+  <h4>대표 에러(예외) 종류 — 코드와 매칭 (빈출)</h4>
+  <table>
+    <tr><th>상황</th><th>예외</th></tr>
+    <tr><td><code>test=[1,2,3]; test[4]</code> (범위 초과)</td><td><code>IndexError</code></td></tr>
+    <tr><td><code>int(test)</code> / <code>'3'/4</code> (타입 부적절·강제변환 없이 혼합)</td><td><code>TypeError</code></td></tr>
+    <tr><td>정의 안 된 변수 <code>a</code> 참조</td><td><code>NameError</code></td></tr>
+    <tr><td>타입은 맞지만 값이 부적절 (예: int('abc'))</td><td><code>ValueError</code></td></tr>
+    <tr><td>괄호·따옴표 안 닫음, 파싱 불가</td><td><code>SyntaxError</code></td></tr>
+    <tr><td>속성 참조 실패 (예: None.parent1)</td><td><code>AttributeError</code></td></tr>
+    <tr><td>파일 못 찾음 등 입출력 오류</td><td><code>IOError</code></td></tr>
+    <tr><td><code>1/0</code> (0으로 나눔)</td><td><code>ZeroDivisionError</code></td></tr>
+  </table>
+
+  <h3>3-3. 예외 처리 (try / except) ★</h3>
+  <div class="box prof"><div class="lab">🗣 12주차 교수님</div>“try 안의 코드를 한 줄씩 실행하다가 에러가 나면, <b>except 안의 코드를 실행하고 프로그램을 멈추지 않고 이어간다</b> — 이 부분 한국말로 중요.”</div>
+  <pre><code class="language-python">try:
+    a = int(input("숫자: "))
+    b = int(input("또 숫자: "))
+    print("a/b =", a/b)
+except ValueError:              # 특정 예외별로 분리 처리
+    print("숫자로 변환 불가")
+except ZeroDivisionError:
+    print("0으로 못 나눔")
+except:                          # 그 외 모든 예외
+    print("뭔가 크게 잘못됨")
+else:
+    print("예외 없을 때만 실행")
+finally:
+    print("항상 실행 (정리용: 파일 닫기 등)")</code></pre>
+  <ul>
+    <li><strong>else</strong>: try가 <b>예외 없이</b> 끝났을 때만</li>
+    <li><strong>finally</strong>: 예외 발생/return/break와 <b>무관하게 항상</b> 실행(정리 코드)</li>
+    <li><strong>raise</strong>로 직접 예외 발생: <code>raise ValueError("메시지")</code> — 잘못된 결과 대신 명확히 신호</li>
+  </ul>
+  <h4>에러 대처 3가지 &amp; 대표 예제(평균 계산)</h4>
+  <p>“조용히 실패(default값으로 슬쩍)=나쁨 / ‘에러값’ 반환=코드 복잡 / <b>예외 발생(raise)</b>=권장”.</p>
+  <pre><code class="language-python"># 학생별 평균에서 빈 성적 리스트 → ZeroDivisionError
+def avg(grades):
+    try:
+        return sum(grades)/len(grades)
+    except ZeroDivisionError:
+        print('warning: no grades data')
+        return 0.0           # 옵션2: 정책 변경(0점 부여). 옵션1은 메시지만</code></pre>
+
+  <h3>3-4. Assertion (assert) — 방어적 프로그래밍</h3>
+  <pre><code class="language-python">def avg(grades):
+    assert len(grades) != 0, 'no grades data'   # 거짓이면 AssertionError로 즉시 중단
+    return sum(grades)/len(grades)</code></pre>
+  <ul>
+    <li><code>assert 조건, "메시지"</code> — 조건이 거짓이면 <code>AssertionError</code> 발생시켜 <b>즉시 중단</b></li>
+    <li>주로 <b>함수 입력의 전제조건</b> 검사(빈 리스트 방지 등), 출력·불변식 검사에도 사용 → <b>버그를 발생 즉시 그 자리에서</b> 잡음</li>
+    <li>예외(raise)와 차이: assert는 “있어선 안 될 상태”를 개발 중 빨리 드러내는 용도(응답 제어 X)</li>
+  </ul>
+
+  <h4>📋 개념 Q&amp;A — Lec07</h4>
+  <div class="qa"><div class="q">unit / regression / integration testing의 차이는?</div><div class="a">unit=함수별 개별 검증, regression=고친 버그가 재발하는지 테스트 추가, integration=전체 프로그램 동작 확인.</div></div>
+  <div class="qa"><div class="q">black box와 glass box testing의 차이는?</div><div class="a">black box=<b>명세만</b> 보고(경계값 포함) 설계, glass box=<b>코드 경로</b>를 보고 path-complete하게 설계.</div></div>
+  <div class="qa"><div class="q"><code>[1,2,3][5]</code> 와 <code>int('abc')</code> 는 각각 무슨 예외?</div><div class="a">앞은 <code>IndexError</code>(범위 초과), 뒤는 <code>ValueError</code>(타입은 str로 맞지만 값이 정수로 변환 불가).</div></div>
+  <div class="qa"><div class="q"><code>finally</code> 블록은 언제 실행되나?</div><div class="a">try/except/else 이후 <b>항상</b>. 예외가 났든, return/break를 했든 무조건 실행(파일 닫기 등 정리용).</div></div>
+  <div class="qa"><div class="q">assert와 raise(예외)의 용도 차이?</div><div class="a">assert=전제조건이 거짓이면 즉시 중단(개발 중 버그 조기 발견). raise=함수 명세에 맞는 결과를 못 낼 때 명시적으로 예외 신호.</div></div>
+
+  <h4>✏️ fill-in-TODO — Lec07</h4>
+  <details class="todo"><summary>문제 7. 안전한 나눗셈: 0이면 None 반환</summary>
+  <div class="body">
+  <pre><code class="language-python">def safe_div(a, b):
+    try:
+        return ____           # TODO (A)
+    except ____:              # TODO (B) 0으로 나눌 때의 예외
+        return None</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">        return a / b          # (A)
+    except ZeroDivisionError: # (B)
+        return None</code></pre>
+  </div></div></details>
+
+  <details class="todo"><summary>문제 8. assert로 입력 검증 후 평균</summary>
+  <div class="body">
+  <pre><code class="language-python">def average(nums):
+    assert ____, 'empty list'   # TODO (A) 빈 리스트 금지
+    return sum(nums) / len(nums)</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">    assert len(nums) != 0, 'empty list'   # (A)  (len(nums) &gt; 0 도 정답)</code></pre>
+  </div></div></details>
+
+  <details class="todo"><summary>문제 9. 출력 결과 예측 — try/except/finally</summary>
+  <div class="body">
+  <pre><code class="language-python">def f(x):
+    try:
+        print("A")
+        y = 10 / x
+        print("B")
+        return y
+    except ZeroDivisionError:
+        print("C")
+        return -1
+    finally:
+        print("D")
+
+print(f(0))</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <p>출력 순서: <code>A</code> → (10/0에서 예외) → <code>C</code> → <code>D</code> → <code>-1</code></p>
+  <span class="muted"><code>B</code>는 출력되지 않음(예외로 건너뜀). finally의 <code>D</code>는 return 직전에도 항상 실행. 마지막 <code>print(f(0))</code>이 반환값 <code>-1</code>을 출력.</span>
+  </div></div></details>
+</section>
+
+<section id="lec8">
+  <h2 class="part">4. Lecture 08 — 객체지향 프로그래밍(OOP) <span class="part-tag">★ 기말 최핵심</span></h2>
+  <div class="box prof"><div class="lab">🗣 13주차 교수님 (최상위 강조)</div>
+    “이거 <b>이해 안 되면 안 됩니다</b>. 이해 안 되면 <b>기말고사에 아무것도 [할] 수 없을 수 있어요.</b>” — 이 절은 한 줄도 빠짐없이 손으로 써볼 것.
+  </div>
+
+  <h3>4-1. 객체(Object)와 클래스(Class)</h3>
+  <p><strong>파이썬의 모든 값은 객체</strong>이고, 모든 객체는 ① <strong>타입</strong> ② <strong>내부 데이터 표현</strong> ③ <strong>상호작용용 메서드</strong>를 가진다. <code>1234</code>는 int의 인스턴스, <code>"hello"</code>는 str의 인스턴스.</p>
+  <div class="box note"><div class="lab">🐶 붕어빵 비유 (교수님)</div>
+    <b>클래스를 만든다</b> = “강아지란 눈·코가 있고 다리 4개고 이런 걸 할 수 있다”고 <b>정의(틀)</b>하는 것. <b>클래스를 사용한다</b> = 그 정의대로 <b>실제 객체(인스턴스)를 찍어내는 것</b>(개 10마리, 양 100마리). 붕어빵 틀(클래스) → 붕어빵들(인스턴스).
+  </div>
+  <h4>두 가지 속성</h4>
+  <ul>
+    <li><strong>데이터 속성(data attributes)</strong> — “객체가 <b>무엇인가</b>”(명사). 예: 좌표의 x, y / 동물의 age, name</li>
+    <li><strong>메서드(procedural attributes)</strong> — “객체가 <b>무엇을 하는가</b>”(동사). 이 클래스에서만 동작하는 함수. 예: 두 좌표 사이 거리 구하기</li>
+  </ul>
+
+  <h3>4-2. 클래스 정의 — Coordinate 예제 (통째로 암기)</h3>
+  <pre><code class="language-python">class Coordinate(object):           # object 상속 → Coordinate는 object의 subclass
+    def __init__(self, x, y):       # 생성자: 인스턴스 만들 때 자동 호출
+        self.x = x                  # self = 지금 만들어지는 인스턴스 자신
+        self.y = y                  # self.x, self.y = 인스턴스 변수
+    def distance(self, other):      # 메서드: 첫 인자는 항상 self
+        x_diff_sq = (self.x - other.x)**2
+        y_diff_sq = (self.y - other.y)**2
+        return (x_diff_sq + y_diff_sq)**0.5
+    def __str__(self):              # print(객체)할 때의 문자열 표현
+        return "&lt;" + str(self.x) + "," + str(self.y) + "&gt;"</code></pre>
+  <pre><code class="language-python"># 사용(using the class)
+c = Coordinate(3, 4)                # 인스턴스 생성 (self는 파이썬이 자동 전달)
+origin = Coordinate(0, 0)
+print(c.x)                          # 3  (점 표기로 데이터 속성 접근)
+print(c.distance(origin))          # 5.0
+print(c)                           # &lt;3,4&gt;   ← __str__ 덕분
+print(type(c))                     # &lt;class '__main__.Coordinate'&gt;
+print(isinstance(c, Coordinate))   # True</code></pre>
+  <div class="box key"><div class="lab">🔑 절대 헷갈리지 말 것</div>
+    <ul style="margin:4px 0">
+      <li><b>self</b> = 메서드를 호출한 그 인스턴스. 정의할 때 첫 인자로 <b>항상</b> 써준다. <b>호출할 때는 self를 안 넘긴다</b>(파이썬이 자동).</li>
+      <li><b>__init__</b> = 인스턴스 생성 시 자동 호출되는 초기화 함수. <b>return 없음</b>.</li>
+      <li>점(.) 표기로 데이터 속성·메서드 모두 접근: <code>c.x</code>, <code>c.distance(...)</code>.</li>
+      <li>기본 print는 <code>&lt;__main__.Coordinate object at 0x...&gt;</code> 같이 무의미 → <b>__str__</b>로 원하는 표현 정의(override).</li>
+    </ul>
+  </div>
+  <h4>메서드 호출 — 두 방식은 동치 (교수님 강조)</h4>
+  <pre><code class="language-python">c.distance(zero)                 # 관용적 방식 (self ← c)
+Coordinate.distance(c, zero)     # 위와 완전히 동일 (self에 c를 직접 전달)</code></pre>
+
+  <h3>4-3. 특수 메서드 &amp; 연산자 오버로딩</h3>
+  <p>이중 밑줄(<code>__ __</code>) 특수 메서드를 정의하면 <strong>연산자를 내 클래스에 맞게 재정의(override)</strong>할 수 있다.</p>
+  <table>
+    <tr><th>특수 메서드</th><th>대응 연산</th></tr>
+    <tr><td><code>__add__(self, other)</code></td><td><code>self + other</code></td></tr>
+    <tr><td><code>__sub__(self, other)</code></td><td><code>self - other</code></td></tr>
+    <tr><td><code>__eq__(self, other)</code></td><td><code>self == other</code></td></tr>
+    <tr><td><code>__lt__(self, other)</code></td><td><code>self &lt; other</code></td></tr>
+    <tr><td><code>__len__(self)</code></td><td><code>len(self)</code></td></tr>
+    <tr><td><code>__str__(self)</code></td><td><code>print(self)</code></td></tr>
+  </table>
+  <h4>예제: 분수(Fraction) 클래스</h4>
+  <pre><code class="language-python">class Fraction(object):
+    def __init__(self, numer, denom):   # 분자, 분모
+        self.numer = numer
+        self.denom = denom
+    def __str__(self):
+        return str(self.numer) + "/" + str(self.denom)
+    def __add__(self, other):           # a/b + c/d = (ad+cb)/bd
+        numerNew = self.numer*other.denom + other.numer*self.denom
+        denomNew = self.denom*other.denom
+        return Fraction(numerNew, denomNew)
+    def convert(self):                  # float로 변환
+        return self.numer / self.denom
+
+f1 = Fraction(1, 2)
+f2 = Fraction(1, 4)
+print(f1 + f2)        # 6/8   ← __add__ 호출
+print((f1 + f2).convert())   # 0.75</code></pre>
+
+  <div class="box key"><div class="lab">🔑 왜 OOP인가</div>
+    데이터와 그 데이터를 다루는 함수를 <b>한 묶음(패키지)</b>으로 → 모듈화·재사용·복잡도 감소. <b>추상화</b>로 “어떻게 구현했나”와 “어떻게 쓰나”를 분리(사용자는 인터페이스만 알면 됨). 파이썬 기본 클래스 위에 <b>나만의 타입</b>을 쌓을 수 있다.
+  </div>
+
+  <h4>📋 개념 Q&amp;A — OOP</h4>
+  <div class="qa"><div class="q">클래스를 “정의”하는 것과 “사용”하는 것의 차이는?</div><div class="a">정의=틀(이름·데이터 속성·메서드)을 만드는 것. 사용=그 틀로 <b>인스턴스를 생성</b>하고 연산하는 것. (붕어빵 틀 vs 붕어빵)</div></div>
+  <div class="qa"><div class="q"><code>self</code>는 무엇인가? 호출할 때 넘겨주나?</div><div class="a">메서드를 호출한 <b>그 인스턴스 자신</b>. 정의 시 첫 인자로 항상 쓰지만, <b>호출 시엔 안 넘긴다</b>(파이썬이 자동 전달). <code>c.distance(z)</code> ↔ <code>Coordinate.distance(c, z)</code>.</div></div>
+  <div class="qa"><div class="q"><code>__init__</code>의 역할과 특징은?</div><div class="a">인스턴스 생성 시 <b>자동 호출</b>되어 데이터 속성을 초기화. 반환값이 없다.</div></div>
+  <div class="qa"><div class="q"><code>__str__</code>를 정의하는 이유는?</div><div class="a">기본 print는 메모리 주소 같은 무의미한 표현을 보여줌. <code>__str__</code>로 <code>print(객체)</code> 시 출력할 문자열을 직접 정한다(override).</div></div>
+  <div class="qa"><div class="q">데이터 속성과 메서드의 차이는?</div><div class="a">데이터 속성=객체가 <b>무엇인지</b>(상태, 명사). 메서드=객체가 <b>무엇을 하는지</b>(행동, 동사, 이 클래스 전용 함수).</div></div>
+  <div class="qa"><div class="q"><code>c == d</code>를 내 클래스에 맞게 동작시키려면?</div><div class="a"><code>__eq__(self, other)</code> 특수 메서드를 정의(연산자 오버로딩). 마찬가지로 +는 <code>__add__</code>, &lt;는 <code>__lt__</code>.</div></div>
+
+  <h4>✏️ fill-in-TODO — OOP</h4>
+  <details class="todo"><summary>문제 10. Coordinate 생성자와 __str__ 채우기</summary>
+  <div class="body">
+  <pre><code class="language-python">class Coordinate(object):
+    def __init__(self, x, y):
+        ____            # TODO (A) x 저장
+        self.y = y
+    def __str__(self):
+        return "(" + ____ + "," + str(self.y) + ")"   # TODO (B)</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">        self.x = x          # (A)  self에 인스턴스 변수로 저장
+        return "(" + str(self.x) + "," + str(self.y) + ")"   # (B) 숫자→문자열</code></pre>
+  <span class="muted">주의: <code>self.x = x</code>이지 <code>x = x</code>가 아니다. 문자열 연결엔 <code>str()</code> 필요.</span>
+  </div></div></details>
+
+  <details class="todo"><summary>문제 11. distance 메서드 완성</summary>
+  <div class="body">
+  <pre><code class="language-python">class Coordinate(object):
+    def __init__(self, x, y):
+        self.x = x; self.y = y
+    def distance(self, other):
+        dx = (self.x - ____)**2       # TODO (A)
+        dy = (self.y - other.y)**2
+        return ____                   # TODO (B) 유클리드 거리</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">        dx = (self.x - other.x)**2    # (A) 상대 좌표는 other.x
+        return (dx + dy)**0.5         # (B) 제곱합의 제곱근</code></pre>
+  </div></div></details>
+
+  <details class="todo"><summary>문제 12. Fraction에 곱셈(__mul__) 추가</summary>
+  <div class="body">
+  <pre><code class="language-python">class Fraction(object):
+    def __init__(self, n, d):
+        self.n = n; self.d = d
+    def __mul__(self, other):         # a/b * c/d = ac/bd
+        return Fraction(____, ____)   # TODO (A),(B)
+    def __str__(self):
+        return str(self.n) + "/" + str(self.d)
+
+print(Fraction(1,2) * Fraction(2,3))  # 2/6</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">        return Fraction(self.n * other.n, self.d * other.d)  # (A) 분자 곱, (B) 분모 곱</code></pre>
+  <span class="muted"><code>*</code> 연산자 ↔ <code>__mul__</code> 매핑. 새 Fraction 객체를 만들어 반환하는 것이 포인트.</span>
+  </div></div></details>
+</section>
+
+<section id="lec9">
+  <h2 class="part">5. Lecture 09 — 클래스와 상속 <span class="part-tag">★ “별표 별표”</span></h2>
+  <div class="box prof"><div class="lab">🗣 15주차 교수님</div>“<b>별표 별표를 많이 해 주세요.</b> 특히 중요한 거 우리가 <b>오버라이드</b> 할 수 있다… 이걸 가져가면 됩니다.”</div>
+
+  <h3>5-1. getter/setter · 정보 은닉 · 기본 인자</h3>
+  <pre><code class="language-python">class Animal(object):
+    def __init__(self, age):
+        self.age = age
+        self.name = None
+    def get_age(self):          # getter: 데이터 속성 읽기
+        return self.age
+    def get_name(self):
+        return self.name
+    def set_age(self, newage):  # setter: 데이터 속성 쓰기
+        self.age = newage
+    def set_name(self, newname=""):   # 기본 인자(default argument)
+        self.name = newname
+    def __str__(self):
+        return "animal:" + str(self.name) + ":" + str(self.age)</code></pre>
+  <ul>
+    <li>클래스 <b>밖에서는</b> 데이터에 직접 접근(<code>a.age</code>)하지 말고 <b>getter/setter 사용</b>(<code>a.get_age()</code>) — <b>정보 은닉</b></li>
+    <li>이유: 클래스 작성자가 내부 변수명을 바꿔도(<code>self.age</code>→<code>self.years</code>) 바깥 코드가 안 깨짐 → 유지보수↑·버그↓</li>
+    <li>단, <b>파이썬은 정보 은닉이 약함</b>: 밖에서 <code>a.age='infinite'</code>로 쓰거나 <code>a.size="tiny"</code>로 새 속성까지 만들 수 있다(나쁜 스타일이지만 가능)</li>
+    <li><b>기본 인자</b>: 인자 안 주면 기본값 사용. <code>a.set_name()</code>→<code>""</code>, <code>a.set_name("fluffy")</code>→<code>"fluffy"</code></li>
+  </ul>
+
+  <h3>5-2. 상속(Inheritance) &amp; 계층(Hierarchy)</h3>
+  <p>계층: <strong>Animal</strong>(부모/superclass) → <strong>Person, Cat, Rabbit</strong>(자식/subclass) → <strong>Student</strong>(Person의 자식). 자식은 부모의 데이터·메서드를 <strong>모두 물려받고</strong>, ① 더 추가 ② 오버라이드(재정의)할 수 있다.</p>
+  <pre><code class="language-python">class Cat(Animal):              # 괄호 안 Animal = 상속받을 부모
+    def speak(self):           # 새 메서드 추가
+        print("meow")
+    def __str__(self):         # __str__ 오버라이드
+        return "cat:" + str(self.name) + ":" + str(self.age)
+    # __init__ 안 써도 됨 → Animal의 __init__이 그대로 쓰임</code></pre>
+  <div class="box key"><div class="lab">🔑 메서드 탐색 순서 (교수님 “별표”)</div>
+    인스턴스로 메서드를 부르면 → <b>현재 클래스</b>에서 찾고 → 없으면 <b>부모, 조부모…로 계층을 타고 올라가</b> → <b>처음 찾은 메서드</b>를 쓴다. 그래서 자식이 같은 이름 메서드를 정의하면 그게 부모 것을 <b>가린다(override)</b>.
+  </div>
+  <h4>부모 생성자 호출 (자식 __init__에서)</h4>
+  <pre><code class="language-python">class Person(Animal):
+    def __init__(self, name, age):
+        Animal.__init__(self, age)   # 부모 생성자 호출 (self 직접 전달!)
+        self.set_name(name)
+        self.friends = []
+    def add_friend(self, fname):
+        if fname not in self.friends:
+            self.friends.append(fname)
+    def speak(self):
+        print("hello")
+    def age_diff(self, other):
+        diff = self.age - other.age
+        print(abs(diff), "year difference")
+    def __str__(self):
+        return "person:" + str(self.name) + ":" + str(self.age)</code></pre>
+  <pre><code class="language-python">import random
+
+class Student(Person):
+    def __init__(self, name, age, major=None):
+        Person.__init__(self, name, age)   # 부모(Person) 생성자 호출
+        self.major = major
+    def change_major(self, major):
+        self.major = major
+    def speak(self):
+        r = random.random()                # 0~1 균등 난수
+        if r &lt; 0.25:
+            print("i have homework")
+        elif 0.25 &lt;= r &lt; 0.5:
+            print("i need sleep")
+        elif 0.5 &lt;= r &lt; 0.75:
+            print("i should eat")
+        else:
+            print("i am watching tv")</code></pre>
+  <div class="box note"><div class="lab">📦 import random</div>
+    파이썬에 이미 정의된 <b>random 클래스/모듈</b>을 가져와 씀. <code>random.random()</code> = 0 이상 1 미만 <b>균등 난수</b>. 맨 위 헤더에 <code>import random</code>.
+  </div>
+
+  <h3>5-3. 클래스 변수 vs 인스턴스 변수 ★ (Rabbit)</h3>
+  <div class="box prof"><div class="lab">🗣 15주차 — 주민등록번호 비유</div>
+    “<code>self</code>가 없다는 거는 얘가 <b>클래스 변수</b>다 — 모든 인스턴스에서 <b>공유</b>되는 값. 붕어빵 틀에 번호를 매겨 1번·2번·3번 붕어빵을 구분하듯, 토끼마다 고유 id를 준다.”
+  </div>
+  <pre><code class="language-python">class Rabbit(Animal):
+    tag = 1                         # ← 클래스 변수 (self 없음 = 모든 인스턴스 공유)
+    def __init__(self, age, parent1=None, parent2=None):
+        Animal.__init__(self, age)
+        self.parent1 = parent1      # ← 인스턴스 변수 (각 객체마다 따로)
+        self.parent2 = parent2
+        self.rid = Rabbit.tag       # 현재 tag를 내 id로
+        Rabbit.tag += 1             # 다음 토끼를 위해 1 증가
+    def get_rid(self):
+        return str(self.rid).zfill(3)   # 001, 002 ... (3자리 0채움)
+    def get_parent1(self):
+        return self.parent1</code></pre>
+  <table>
+    <tr><th>클래스 변수 (class variable)</th><th>인스턴스 변수 (instance variable)</th></tr>
+    <tr><td>클래스 본문에 직접(<code>tag = 1</code>), <b>self 없음</b></td><td><code>self.parent1 = ...</code>, <b>self 있음</b></td></tr>
+    <tr><td><b>모든 인스턴스가 공유</b>(하나의 값)</td><td>객체마다 <b>독립</b></td></tr>
+    <tr><td><code>Rabbit.tag</code>로 접근</td><td><code>self.rid</code>로 접근</td></tr>
+  </table>
+
+  <h4>연산자 오버로딩 — Rabbit의 __add__, __eq__</h4>
+  <pre><code class="language-python">    def __add__(self, other):
+        # 두 토끼의 자식을 만든다: 나이 0, 부모는 self와 other
+        return Rabbit(0, self, other)
+
+    def __eq__(self, other):
+        # 부모가 같으면 같은 토끼로 간주 (id로 비교 — id는 고유)
+        parents_same = self.parent1.rid == other.parent1.rid \
+                       and self.parent2.rid == other.parent2.rid
+        parents_opposite = self.parent2.rid == other.parent1.rid \
+                           and self.parent1.rid == other.parent2.rid
+        return parents_same or parents_opposite</code></pre>
+  <div class="box trap"><div class="lab">⚠ 왜 객체 직접 비교 대신 id로?</div>
+    <code>self.parent1 == other.parent1</code>처럼 객체를 직접 비교하면 <code>__eq__</code>가 계속 재귀 호출되다 <code>None</code>에 도달해 <code>None.parent1</code>에서 <b>AttributeError</b>. 그래서 고유한 <code>rid</code>(클래스 변수로 부여)로 비교한다.
+  </div>
+
+  <h4>📋 개념 Q&amp;A — 상속</h4>
+  <div class="qa"><div class="q">subclass가 superclass로부터 물려받는 것은? 추가로 할 수 있는 일은?</div><div class="a">부모의 <b>모든 데이터 속성·메서드</b>를 상속. 자식은 ① 새 속성/메서드 추가 ② 기존 메서드 <b>오버라이드</b>(재정의) 가능.</div></div>
+  <div class="qa"><div class="q">인스턴스에서 메서드를 부를 때 어떤 정의가 쓰이나?</div><div class="a">현재 클래스부터 찾고 없으면 계층을 <b>위로</b> 올라가며 찾아 <b>처음 발견한</b> 메서드를 사용. → 자식이 정의했으면 자식 것이 우선.</div></div>
+  <div class="qa"><div class="q">자식 <code>__init__</code>에서 부모 초기화를 어떻게 하나?</div><div class="a"><code>Animal.__init__(self, age)</code>처럼 <b>부모 클래스명으로 호출하고 self를 직접 전달</b>.</div></div>
+  <div class="qa"><div class="q">클래스 변수와 인스턴스 변수의 차이는?</div><div class="a">클래스 변수(<code>tag=1</code>, self 없음)는 <b>모든 인스턴스 공유</b>. 인스턴스 변수(<code>self.rid</code>)는 객체마다 독립. Rabbit이 생길 때마다 <code>Rabbit.tag</code>가 1씩 증가해 고유 id 부여.</div></div>
+  <div class="qa"><div class="q"><code>Cat(Animal)</code>에 <code>__init__</code>이 없으면?</div><div class="a">에러 아님 — <b>부모 Animal의 <code>__init__</code></b>이 그대로 사용된다(상속).</div></div>
+
+  <h4>✏️ fill-in-TODO — 상속</h4>
+  <details class="todo"><summary>문제 13. Dog가 Animal을 상속, speak 오버라이드</summary>
+  <div class="body">
+  <pre><code class="language-python">class Animal(object):
+    def __init__(self, age):
+        self.age = age
+    def speak(self):
+        print("...")
+
+class Dog(____):           # TODO (A) Animal 상속
+    def speak(self):
+        print(____)          # TODO (B) "woof"</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">class Dog(Animal):           # (A) 괄호 안에 부모 클래스
+    def speak(self):
+        print("woof")        # (B)  ← Animal.speak를 오버라이드</code></pre>
+  </div></div></details>
+
+  <details class="todo"><summary>문제 14. 자식 생성자에서 부모 생성자 호출</summary>
+  <div class="body">
+  <pre><code class="language-python">class Person(Animal):
+    def __init__(self, name, age):
+        ____                    # TODO (A) 부모(Animal) 생성자 호출
+        self.name = name</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">        Animal.__init__(self, age)   # (A) self를 직접 넘긴다</code></pre>
+  <span class="muted">부모 클래스명으로 호출하면서 <code>self</code>를 첫 인자로 직접 전달하는 것이 핵심.</span>
+  </div></div></details>
+
+  <details class="todo"><summary>문제 15. 클래스 변수로 인스턴스 개수 세기</summary>
+  <div class="body">
+  <pre><code class="language-python">class Widget(object):
+    count = 0                   # 클래스 변수
+    def __init__(self):
+        ____                    # TODO (A) 생성될 때마다 1 증가
+        self.id = Widget.count
+
+a = Widget(); b = Widget(); c = Widget()
+print(Widget.count, c.id)       # ?</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">        Widget.count += 1       # (A) 클래스 변수는 클래스명으로 접근</code></pre>
+  <p>출력: <code>3 3</code> — count는 공유되어 3, c는 세 번째 생성이라 id=3.</p>
+  </div></div></details>
+</section>
+
+<section id="cheat">
+  <h2 class="part">6. 핵심 치트시트 <span class="part-tag">오픈북 지참용 — 인쇄 추천</span></h2>
+  <p class="muted">시험장엔 인터넷·컴퓨터 불가, 노트·출력물만 가능. 이 한 장만 있어도 코딩 셋을 풀 수 있게 압축.</p>
+
+  <div class="dash" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+    <div class="card">
+      <div class="k">재귀 Recursion</div>
+      <pre style="margin:8px 0 0"><code class="language-python">def f(n):
+    if 종료조건:      # base case
+        return 기본값
+    return f(더작은입력)  # recursive</code></pre>
+    </div>
+    <div class="card">
+      <div class="k">딕셔너리 Dict</div>
+      <pre style="margin:8px 0 0"><code class="language-python">d = {}
+d[k] = v            # 추가/수정
+d[k]                # 조회(없으면 KeyError)
+k in d              # 존재 검사
+del(d[k])           # 삭제
+d.keys(); d.values()
+d[w] = d.get(w,0)+1 # 빈도 세기</code></pre>
+      <span class="muted" style="font-size:12px">key=불변(str,int,tuple) / list 불가</span>
+    </div>
+    <div class="card">
+      <div class="k">예외 Exceptions</div>
+      <pre style="margin:8px 0 0"><code class="language-python">try:
+    위험코드
+except ValueError:
+    처리
+except ZeroDivisionError:
+    처리
+else:      # 예외 없을 때만
+finally:   # 항상
+raise ValueError("msg")
+assert 조건, "msg"</code></pre>
+    </div>
+    <div class="card">
+      <div class="k">클래스 Class</div>
+      <pre style="margin:8px 0 0"><code class="language-python">class C(object):
+    def __init__(self, x):
+        self.x = x          # 인스턴스변수
+    def m(self, other):
+        return self.x
+    def __str__(self):
+        return "..."
+o = C(3); o.m(z); print(o)</code></pre>
+    </div>
+    <div class="card">
+      <div class="k">상속 Inheritance</div>
+      <pre style="margin:8px 0 0"><code class="language-python">class Sub(Base):
+    cls_var = 0             # 클래스변수(공유)
+    def __init__(self, a, b):
+        Base.__init__(self, a)  # 부모생성자
+        self.b = b
+    def m(self):           # 오버라이드
+        ...</code></pre>
+    </div>
+    <div class="card">
+      <div class="k">특수 메서드 ↔ 연산자</div>
+      <table style="margin:6px 0 0;font-size:12.5px">
+        <tr><td><code>__add__</code></td><td><code>+</code></td><td><code>__eq__</code></td><td><code>==</code></td></tr>
+        <tr><td><code>__sub__</code></td><td><code>-</code></td><td><code>__lt__</code></td><td><code>&lt;</code></td></tr>
+        <tr><td><code>__mul__</code></td><td><code>*</code></td><td><code>__len__</code></td><td><code>len()</code></td></tr>
+        <tr><td><code>__str__</code></td><td><code>print</code></td><td><code>__init__</code></td><td>생성</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="k">에러 종류</div>
+      <table style="margin:6px 0 0;font-size:12.5px">
+        <tr><td><code>IndexError</code></td><td>범위 초과</td></tr>
+        <tr><td><code>KeyError</code></td><td>없는 dict key</td></tr>
+        <tr><td><code>TypeError</code></td><td>타입 부적절</td></tr>
+        <tr><td><code>ValueError</code></td><td>값 부적절</td></tr>
+        <tr><td><code>NameError</code></td><td>미정의 변수</td></tr>
+        <tr><td><code>ZeroDivisionError</code></td><td>0 나눗셈</td></tr>
+        <tr><td><code>AttributeError</code></td><td>속성 없음</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="k">기억할 핵심 한 줄</div>
+      <ul style="margin:6px 0 0;font-size:13px;padding-left:18px">
+        <li><b>self</b>=인스턴스 자신, 호출 땐 안 넘김</li>
+        <li><b>__init__</b>=자동 호출, return 없음</li>
+        <li>메서드는 계층 <b>위로</b> 올라가 <b>처음 것</b></li>
+        <li>클래스변수=공유, 인스턴스변수=독립</li>
+        <li>memoization=계산값 dict 저장</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="mock">
+  <h2 class="part">7. 종합 모의고사 <span class="part-tag">실제 4 셋 형식 재현</span></h2>
+  <p class="muted">중간과 동일 구조: 셋1·2 개념(종이), 셋3·4 fill-in-TODO(코딩). 먼저 가린 채 풀고 정답을 펼치세요.</p>
+
+  <h3>SET 1 — 개념: 데이터 타입 &amp; 규칙</h3>
+  <details class="todo"><summary>1-1 ~ 1-5 (펼쳐서 정답 확인)</summary>
+  <div class="body">
+  <ol>
+    <li>딕셔너리의 key로 쓸 수 <b>없는</b> 타입 하나를 쓰고 이유를 말하라.<br>
+      <span class="sol"><b>답:</b> <code>list</code> — 가변(mutable)이라 hashable하지 않음. key는 불변 타입(str,int,tuple,bool)만.</span></li>
+    <li><code>grades.keys()</code>와 <code>grades.values()</code>는 각각 무엇을 돌려주나?<br>
+      <span class="sol"><b>답:</b> 모든 key들 / 모든 value들 (tuple처럼 순회 가능한 iterable, 순서 보장 없음).</span></li>
+    <li>list와 dict의 조회 방식 차이는?<br>
+      <span class="sol"><b>답:</b> list=정수 인덱스(순서 있음), dict=임의의 불변 key(순서 없음).</span></li>
+    <li>재귀 함수에 반드시 있어야 하는 두 요소는?<br>
+      <span class="sol"><b>답:</b> base case + recursive step.</span></li>
+    <li><code>random.random()</code>의 반환 범위는?<br>
+      <span class="sol"><b>답:</b> 0 이상 1 미만의 균등 난수.</span></li>
+  </ol>
+  </div></details>
+
+  <h3>SET 2 — 개념: 함수·메서드·예외</h3>
+  <details class="todo"><summary>2-1 ~ 2-5 (펼쳐서 정답 확인)</summary>
+  <div class="body">
+  <ol>
+    <li>메서드 정의의 첫 인자 <code>self</code>는 무엇이며, 호출 시 넘기는가?<br>
+      <span class="sol"><b>답:</b> 호출한 인스턴스 자신. 호출 시엔 안 넘김(자동). <code>c.m(z)</code>=<code>C.m(c,z)</code>.</span></li>
+    <li><code>__init__</code>과 <code>__str__</code>의 역할?<br>
+      <span class="sol"><b>답:</b> <code>__init__</code>=생성 시 자동 호출 초기화(반환X), <code>__str__</code>=print 시 문자열 표현 정의.</span></li>
+    <li>다음의 예외 이름: <code>[1,2][9]</code> / <code>int("hi")</code> / <code>1/0</code><br>
+      <span class="sol"><b>답:</b> IndexError / ValueError / ZeroDivisionError.</span></li>
+    <li><code>finally</code>는 언제 실행되나?<br>
+      <span class="sol"><b>답:</b> 예외 발생·return·break와 무관하게 <b>항상</b>.</span></li>
+    <li>상속에서 자식이 부모와 같은 이름의 메서드를 정의하면?<br>
+      <span class="sol"><b>답:</b> 오버라이드 — 자식 인스턴스는 자식 메서드를 사용(계층 위로 올라가며 처음 찾은 것).</span></li>
+  </ol>
+  </div></details>
+
+  <h3>SET 3 — fill-in-TODO: 재귀 + 딕셔너리 프로그램</h3>
+  <p>아래는 단어 리스트에서 <b>가장 많이 나온 단어</b>를 찾는 프로그램이다. TODO를 채워라.</p>
+  <details class="todo"><summary>문제 코드 → 펼치면 정답</summary>
+  <div class="body">
+  <pre><code class="language-python">def build_freq(words):
+    freq = {}
+    for w in words:
+        freq[w] = ____            # TODO (A)
+    return freq
+
+def most_common(freq):
+    best_word = None
+    best_count = -1
+    for w in freq:
+        if ____:                  # TODO (B) 더 큰 빈도 발견
+            best_word = w
+            best_count = freq[w]
+    return best_word
+
+words = ['a','b','a','c','a','b']
+print(most_common(build_freq(words)))   # 'a'</code></pre>
+  <div class="sol"><div class="lab">정답</div>
+  <pre><code class="language-python">        freq[w] = freq.get(w, 0) + 1     # (A) 빈도 누적
+        if freq[w] &gt; best_count:          # (B) 현재까지 최댓값 갱신</code></pre>
+  </div>
+  </div></details>
+
+  <h3>SET 4 — fill-in-TODO: 클래스 + 상속 프로그램</h3>
+  <p>은행 계좌(Account)와 이자 계좌(SavingsAccount)를 정의한다. TODO를 채워라.</p>
+  <details class="todo"><summary>문제 코드 → 펼치면 정답</summary>
+  <div class="body">
+  <pre><code class="language-python">class Account(object):
+    def __init__(self, balance):
+        ____                       # TODO (A) balance를 인스턴스 변수로
+    def deposit(self, amount):
+        self.balance += amount
+    def __str__(self):
+        return "balance: " + str(self.balance)
+
+class SavingsAccount(Account):
+    def __init__(self, balance, rate):
+        ____                       # TODO (B) 부모 생성자 호출
+        self.rate = rate
+    def add_interest(self):
+        self.balance += ____       # TODO (C) 잔액 × 이율
+
+s = SavingsAccount(1000, 0.05)
+s.add_interest()
+print(s)                           # balance: 1050.0</code></pre>
+  <div class="sol"><div class="lab">정답 &amp; 해설</div>
+  <pre><code class="language-python">        self.balance = balance              # (A)
+        Account.__init__(self, balance)     # (B) 부모 생성자, self 직접 전달
+        self.balance += self.balance * self.rate   # (C)  1000*0.05=50 → 1050.0</code></pre>
+  <span class="muted">(A) self에 저장, (B) 부모 초기화로 balance 세팅, (C) 이자=잔액×이율. <code>__str__</code>는 Account 것을 상속받아 그대로 사용.</span>
+  </div>
+  </div></details>
+
+  <div class="box key" style="margin-top:24px"><div class="lab">✅ 마무리 체크리스트</div>
+    <ul style="margin:4px 0">
+      <li>재귀: base case + 더 작은 호출 / 호출 추적해 출력 쓸 수 있다</li>
+      <li>딕셔너리: 빈도 세기·memoization 코드를 손으로 쓴다</li>
+      <li>예외: try/except/else/finally 실행 순서 + 에러 종류 매칭</li>
+      <li>OOP: <b>self·__init__·메서드 호출 2방식·__str__</b> (교수님 1순위)</li>
+      <li>상속: 부모 생성자 호출·오버라이드·메서드 탐색·클래스 변수 (별표)</li>
+      <li>과제 3–6 엘리스 코드 다시 채워보기</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  기초인공지능프로그래밍(COR1010) 기말 완벽정리 · Lecture 06–09 종합 · 강의 PDF(MIT 6.0001 Lec6–9) + 9–15주차 녹취록 분석 기반<br>
+  출처 표기 외 모든 코드는 Python 3 기준으로 실행 검증됨.
+</footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>try{hljs.highlightAll();}catch(e){}</script>
+</body>
+</html>
